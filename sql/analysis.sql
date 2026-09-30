@@ -144,7 +144,7 @@ SELECT
         WHEN order_delivered_customer_date <= order_estimated_delivery_date
             THEN 'On Time'
         WHEN order_delivered_customer_date > order_estimated_delivery_date
-            THEN 'Late'
+            THEN 'Delayed'
     END AS delivery_status,
     COUNT(*) AS total_orders
 FROM orders

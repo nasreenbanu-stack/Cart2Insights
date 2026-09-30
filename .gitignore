@@ -1,18 +1,4 @@
-# Python
-__pycache__/
-*.py[cod]
-
-# Jupyter
-.ipynb_checkpoints/
-
-# Virtual environment
-venv/
+data/
 .venv/
-
-# Raw and cleaned datasets
-data/raw/
-data/cleaned/
-
-# OS files
-.DS_Store
-Thumbs.db
+__pycache__/
+.ipynb_checkpoints/
