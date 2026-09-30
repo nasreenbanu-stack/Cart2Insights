@@ -2,9 +2,9 @@
 
 ## 📌 Project Overview
 
-Cart2Insights is an e-commerce data analysis project focused on understanding orders, customers, products, sellers, payments, reviews, delivery performance, and geographic information.
+Cart2Insights is an end-to-end e-commerce data analysis project focused on understanding orders, customers, products, sellers, payments, reviews, delivery performance, and geographic information.
 
-The project uses **Python for data cleaning and validation** and **MySQL for relational data analysis and business insights**.
+The project uses **Python and Pandas for data loading, cleaning, validation, feature engineering, and exploratory data analysis**, **MySQL and SQL for relational data analysis**, and **Streamlit for interactive dashboard visualization**.
 
 ## 🎯 Project Objectives
 
@@ -14,12 +14,16 @@ The project uses **Python for data cleaning and validation** and **MySQL for rel
 * Check relationships between tables
 * Clean the datasets while preserving the original raw files
 * Load cleaned datasets into MySQL
+* Perform feature engineering
+* Perform exploratory data analysis
+* Perform statistical analysis
 * Perform SQL-based business analysis
+* Build an interactive Streamlit dashboard
 * Generate business insights from the data
 
 ## 🗂️ Dataset Tables
 
-The project contains:
+The project contains the following tables:
 
 1. `customers`
 2. `orders`
@@ -39,6 +43,9 @@ The project contains:
 * VS Code
 * MySQL
 * SQL
+* Streamlit
+* Matplotlib
+* SciPy
 * Git / GitHub
 
 ## 🧹 Data Cleaning & Validation
@@ -60,7 +67,7 @@ The original raw datasets were preserved, and cleaned copies were created separa
 
 ## 🗄️ MySQL Database
 
-The cleaned datasets were loaded into:
+The cleaned datasets were loaded into the MySQL database:
 
 `olist_project`
 
@@ -73,14 +80,85 @@ Important relationships include:
 * `order_reviews.order_id → orders.order_id`
 * `order_payments.order_id → orders.order_id`
 
-Composite keys were used for:
+Composite keys were validated for:
 
 * `order_items`
 * `order_payments`
 
+## ⚙️ Feature Engineering
+
+Feature engineering was performed using the cleaned datasets.
+
+Important features include:
+
+* `total_order_value`
+* `delivery_days`
+* `delivery_delay_days`
+* `delivery_status`
+* `customer_order_count`
+* `customer_total_spending`
+* `average_order_value`
+* `repeat_customer`
+* `customer_unique_order_count`
+* `seller_order_count`
+* `seller_revenue`
+
+The feature-engineered datasets were saved under `data/processed/`.
+
+Orders without matching order-item records resulted in missing `total_order_value`; these values were retained as missing rather than incorrectly replacing them with zero.
+
+## 📊 Exploratory Data Analysis
+
+EDA was performed to understand:
+
+* Order-status distribution
+* Monthly order trends
+* Monthly sales trends
+* Customer repeat behavior
+* Customer spending
+* Delivery performance
+* Delivery delays
+* Seller performance
+* Customer frequency
+* Delivery status by order status
+
+## 📐 Statistical Analysis
+
+Three statistical tests were performed:
+
+### T-Test — Delivery Status vs Review Score
+
+On-time and delayed deliveries were compared using review scores.
+
+* On-time mean review score: **4.29**
+* Delayed mean review score: **2.57**
+* Welch's t-statistic: **89.55**
+* P-value: **< 0.001**
+
+The result provides strong statistical evidence that the mean review scores differed between on-time and delayed deliveries in this dataset. This analysis shows association between the variables and does not establish causation.
+
+### ANOVA — Product Category vs Item Price
+
+Item prices were compared across product categories.
+
+* F-statistic: **192.01**
+* P-value: **< 0.001**
+
+The result provides strong statistical evidence that mean item prices differed across product categories.
+
+### Chi-Square — Payment Type vs Order Status
+
+Payment type and order status were analyzed using a chi-square test.
+
+* Chi-square statistic: **939.51**
+* Degrees of freedom: **28**
+* P-value: **< 0.001**
+
+The result provides strong statistical evidence of an association between payment type and order status.
+
 ## 📊 SQL Analysis
 
-The project analyzes:
+The SQL analysis covers:
 
 * Order-status distribution
 * Monthly order volume
@@ -99,8 +177,14 @@ The project analyzes:
 * Freight versus product price
 * Product-category sales volume
 * Review score versus delivery time
-* Seller revenue
+* Top sellers by revenue
+* Product categories by average price
+* Product categories by number of orders
 * Overall business metrics
+
+The SQL queries are available in:
+
+`sql/analysis.sql`
 
 ## 📈 Key Results
 
@@ -115,6 +199,8 @@ The project analyzes:
 | Average freight value             |         19.99 |
 | Average delivery time             |    12.50 days |
 | Delivered orders                  |        96,478 |
+| Delayed orders                    |         7,827 |
+| Repeat customer orders            |         6,342 |
 
 ## 🔍 Key Observations
 
@@ -130,7 +216,11 @@ Order volume increased substantially during 2017 and 2018 compared with the earl
 
 The average delivery time for orders with a recorded customer delivery date was **12.50 days**.
 
-The data also contains orders where the actual delivery date was later than the estimated delivery date.
+The analysis also identified orders where the actual delivery date was later than the estimated delivery date.
+
+### Customers
+
+The feature-engineering analysis identified **6,342 orders associated with repeat customers**, based on `customer_unique_id`.
 
 ### Products & Sellers
 
@@ -142,7 +232,24 @@ Payment methods, payment values, and installment patterns were analyzed to under
 
 ### Reviews
 
-Review scores from 1 to 5 were analyzed along with delivery time to examine customer feedback and delivery experience.
+Review scores from 1 to 5 were analyzed along with delivery performance and delivery time to examine customer feedback and delivery experience.
+
+## 📊 Streamlit Dashboard
+
+An interactive Streamlit dashboard was developed with the following sections:
+
+* **Overview**
+* **Sales**
+* **Customers**
+* **Delivery**
+* **Customer Experience**
+* **Sellers**
+
+The dashboard provides interactive views of key e-commerce performance metrics and analysis results.
+
+The application is available in:
+
+`app.py`
 
 ## 📁 Project Structure
 
@@ -151,16 +258,23 @@ Cart2Insights/
 │
 ├── data/
 │   ├── raw/
-│   └── cleaned/
+│   ├── cleaned/
+│   └── processed/
 │
 ├── notebooks/
-│   └── 02_data_cleaning.ipynb
+│   ├── 02_data_cleaning.ipynb
+│   ├── 03_feature_engineering.ipynb
+│   └── 04_eda.ipynb
 │
 ├── sql/
 │   └── analysis.sql
 │
-└── README.md
+├── app.py
+├── README.md
+└── .gitignore
 ```
+
+The raw, cleaned, and processed CSV files are kept locally and excluded from Git tracking using `.gitignore`.
 
 ## 🚀 Project Workflow
 
@@ -171,7 +285,7 @@ Data Understanding
    ↓
 Data Quality Checks
    ↓
-Data Cleaning
+Data Cleaning & Validation
    ↓
 Cleaned CSV Files
    ↓
@@ -179,13 +293,21 @@ MySQL Database
    ↓
 Relationship Validation
    ↓
-SQL Analysis
+Feature Engineering
+   ↓
+Exploratory Data Analysis
+   ↓
+Statistical Analysis
+   ↓
+SQL Business Analysis
+   ↓
+Streamlit Dashboard
    ↓
 Business Insights
 ```
 
 ## 💡 Conclusion
 
-This project demonstrates an end-to-end e-commerce data-analysis workflow, from raw CSV files through data cleaning, validation, MySQL database creation, SQL analysis, and business insights.
+This project demonstrates an end-to-end e-commerce data-analysis workflow, from raw CSV files through data cleaning, validation, MySQL database integration, feature engineering, exploratory and statistical analysis, SQL business analysis, and interactive dashboard development.
 
-It demonstrates practical experience with **Python, Pandas, SQL, MySQL, relational data modeling, data quality validation, and business analysis**.
+It demonstrates practical experience with **Python, Pandas, SQL, MySQL, Streamlit, relational data modeling, data quality validation, feature engineering, exploratory data analysis, statistical testing, and business analysis**.
