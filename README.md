@@ -234,6 +234,35 @@ Payment methods, payment values, and installment patterns were analyzed to under
 
 Review scores from 1 to 5 were analyzed along with delivery performance and delivery time to examine customer feedback and delivery experience.
 
+## 💼 Business Insights & Recommendations
+
+### Delivery Performance
+**Observation:** Some orders were delivered later than the estimated delivery date.
+
+**Interpretation:** Delivery delays are present in the order data and can affect the overall customer experience.
+
+**Business Impact:** Monitoring delayed orders can help identify delivery-performance issues and areas for operational improvement.
+
+**Recommendation:** Track delayed deliveries regularly and investigate recurring delays by seller, location, and time period.
+
+### Customer Retention
+**Observation:** 6,342 orders were associated with repeat customers based on `customer_unique_id`.
+
+**Interpretation:** A portion of customers placed multiple orders during the observed period.
+
+**Business Impact:** Repeat purchasing provides an opportunity to understand and support customer retention.
+
+**Recommendation:** Analyze repeat-customer purchasing patterns and develop suitable retention strategies based on customer behavior.
+
+### Customer Experience
+**Observation:** Review scores were analyzed together with delivery performance.
+
+**Interpretation:** The statistical analysis found a significant difference in average review scores between on-time and delayed orders.
+
+**Business Impact:** Delivery performance is an important area to monitor when evaluating customer experience.
+
+**Recommendation:** Monitor delivery delays alongside review scores and use the results to identify opportunities for improving the delivery experience.
+
 ## 📊 Streamlit Dashboard
 
 An interactive Streamlit dashboard was developed with the following sections:
